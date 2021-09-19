@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Show Books</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <!-- <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        th, td {
+          padding: 5px;
+        }
+        th {
+          text-align: left;
+        }
+        </style> -->
+
+        <!-- <style>
+            table, th, td {
+              border: 1px solid black;
+              padding: 1px;
+            }
+            table {
+              border-spacing: 15px;
+            }
+            </style> -->
+
+<!-- <style>
+    table {
+        width:100%;
+    }
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 15px;
+        text-align: left;
+    }
+    #t01 tr:nth-child(even) {
+        background-color: #eee;
+    }
+    #t01 tr:nth-child(odd) {
+        background-color: #fff;
+    }
+    #t01 th {
+        background-color: black;
+        color: white;
+    }
+    </style> --><style>
+  table {
+    border-collapse: collapse;
+    margin-left:100px;margin-right:auto;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    
+    text-align: center;
+  }
+  tr:nth-child(even) {
+    background-color: #eee;
+  }
+  tr:nth-child(odd) {
+    background-color: #fff;
+  }            
+</style>
+
+
+</head>
+    <body style="background-color: rgb(253, 253, 253);text-align:center">&nbsp
+    <hr> <h1 style ="text-align:center">Book Library </h1><hr>
+    
+    <table style="width:88%" text-align:center border="3" border-collapse: collapse>
+        <tr>
+        <th style = "text-align:center">Book ID </th>
+        <th style = "text-align:center">Book Name</th>
+        <th style = "text-align:center">Book price in &#8377</th>
+        <th style = "text-align:center">Book Qty</th>
+        <th style = "text-align:center">Is Book Published</th>
+        <th style = "text-align:center">Published date</th>
+        <th style = "text-align:center">Action</th>
+
+        
+        {% for i in all_books %}
+        <tr>
+        <th>{{i.id}}</th>
+        <td style="text-align:center">{{i.name}}</td>
+        <td style="text-align:center">{{i.price }} &#8377</td>
+        <td style="text-align:center">{{i.qty}}</td>
+        {%if i.is_published%}
+        <td style="text-align:center"> Yes</td>
+        {% else %}
+        <td style="text-align:center"> No</td>
+        {% endif %}
+        {% if i.published_date %}
+        <td style="text-align:center">{{i.published_date}}</td>
+        {% else %}
+        <td style="text-align:center">--</td>
+        {% endif %}
+        <td style="text-align:center">
+            {% if data_type != "InActive" %}
+            <a href="{% url 'update' i.id %}"> Edit</a> &nbsp| &nbsp
+            <a href="{% url 'soft_delete' i.id %}" style="color: green"> Soft Delete</a> &nbsp| &nbsp
+            <a href="{% url 'hard_delete' i.id %}" style="color: red"> Hard Delete</a> 
+
+            {% else %}
+            <a href="{% url 'hard_delete' i.id %}" style="color: red"> Hard Delete</a> &nbsp| &nbsp
+            <a href="{% url 'restore' i.id %}" style="color: green"> Restore</a> 
+            {% endif %}
+        
+        </td>
+        </tr>
+        {% endfor %}
+    <table>
+        <br> &nbsp   
+        <a href="/homepage/" class="btn btn-warning">Go to Home Page</a> &nbsp
+        <a href="{% url 'active_books' %}" class="btn btn-success">Active Books</a> &nbsp
+        <a href="{% url 'in_active_books' %}" class="btn btn-danger">In-Active Books</a>
+
+
+    </body>
+</html>
